@@ -8,16 +8,16 @@ template = """
  You are a marketing copywriter with 20 years of experience. You are analyzing customer's background to write personalized product description that only this customer will receive; 
     PRODUCT input text: {content};
     CUSTOMER age group (y): {agegroup};
-    CUSTOMER main Hobby: {hobby};
-    TASK: Write a product description that is tailored into this customer's Age group and hobby. Use age group specific slang.;
+    CUSTOMER main Study destination: {study destination};
+    TASK: Write a product description that is tailored into this customer's Age group and study destination. Use age group specific slang.;
     FORMAT: Present the result in the following order: (PRODUCT DESCRIPTION), (BENEFITS), (USE CASE);
-    PRODUCT DESCRIPTION: describe the product in 5 sentences;
-    BENEFITS: describe in 3 sentences why this product is perfect considering customers age group and hobby;
-    USE CASE: write a story in 5 sentences, of an example weekend activity taking into account hobby {hobby} and age {agegroup}, write a story in first person, example "I started my Saturday morning with ...";
+    PRODUCT DESCRIPTION: describe the product in 3 sentences;
+    BENEFITS: describe in 3 sentences why this product is perfect considering customers age group and study destination;
+    USE CASE: write a story in 4 sentences, of an example weekend activity taking into account study destination {study destination} and age {agegroup}, write a story in first person, example "I started my Saturday morning with ...";
 """
 
 prompt = PromptTemplate(
-    input_variables=["agegroup", "hobby", "content"],
+    input_variables=["agegroup", " study destination", "content"],
     template=template,
 )
 
@@ -33,12 +33,12 @@ st.header("Personaliseeritud turundusteksti konverter")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown("Otstarve: tootetutvustustekstide personaliseerimine igale kliendile või kliendigruppidele; väljundtekst on kohandatud kliendi a) vanuserühmaga ja b) hobbitegevusega; sisendtekstiks on neutraalses vormis tootekirjeldus. \
-    \n\n Kasutusjuhend: 1) valmista ette tootekirjeldus (sisendtekst). 2) määra tarbijasegemendid lähtuvalt vanuserühma ja hobbide kombinatsioonidest. 3) sisesta ükshaaval tarbijasegmentide lõikes eeltoodud info äpi kasutajaliideses, saada ära. \
+    st.markdown("Otstarve: tootetutvustustekstide personaliseerimine igale kliendile või kliendigruppidele; väljundtekst on kohandatud kliendi a) vanuserühmaga ja b) sihtriigiga; sisendtekstiks on neutraalses vormis tootekirjeldus. \
+    \n\n Kasutusjuhend: 1) valmista ette tootekirjeldus (sisendtekst). 2) määra tarbijasegemendid lähtuvalt vanuserühma ja sihtriikide kombinatsioonidest. 3) sisesta ükshaaval tarbijasegmentide lõikes eeltoodud info äpi kasutajaliideses, saada ära. \
     4) kopeeri ükshaaval tarbijasegmentide lõikes äpi väljundteksti kõnealuse toote tutvustuslehele.")
 
 with col2:
-    st.image(image='companylogo.jpg', caption='Natural and healthy shirts for everybody')
+    st.image(image='companylogo.jpg', caption='Välismaale ülikooli!')
 
 st.markdown("## Enter Your Content To Convert")
 
@@ -58,11 +58,11 @@ with col1:
         'Which age group would you like your content to target?',
         ('9-15', '16-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-100'))
     
-def get_hobby():
-    input_text = st.text_input(label="Customers main hobby", key="hobby_input")
+def get_ study destination():
+    input_text = st.text_input(label="Customers main study destination", key=" study destination_input")
     return input_text
 
-hobby_input = get_hobby()
+study destination_input = get_ study destination()
 
 def get_text():
     input_text = st.text_area(label="Content Input", label_visibility='collapsed', placeholder="Your content...", key="content_input")
@@ -70,13 +70,13 @@ def get_text():
 
 content_input = get_text()
 
-if len(content_input.split(" ")) > 700:
-    st.write("Please enter a shorter content. The maximum length is 700 words.")
+if len(content_input.split(" ")) > 500:
+    st.write("Please enter a shorter content. The maximum length is 500 words.")
     st.stop()
 
 def update_text_with_example():
     print ("in updated")
-    st.session_state.content_input = "t shirts, all clolors, cotton, responsible manufacturing"
+    st.session_state.content_input = "new study methods, cultural experience, practice English, life-changing experience"
 
 st.button("*GENERATE TEXT*", type='secondary', help="Click to see an example of the content you will be converting.", on_click=update_text_with_example)
 
@@ -89,7 +89,7 @@ if content_input:
 
     llm = load_LLM(openai_api_key=openai_api_key)
 
-    prompt_with_content = prompt.format(agegroup=option_agegroup, hobby=hobby_input, content=content_input)
+    prompt_with_content = prompt.format(agegroup=option_agegroup, study destination= study destination_input, content=content_input)
 
     formatted_content = llm(prompt_with_content)
 
