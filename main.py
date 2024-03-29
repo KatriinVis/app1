@@ -11,9 +11,9 @@ template = """
     CUSTOMER main Study destination: {studydestination};
     TASK: Write a product description that is tailored into this customer's Age group and study destination. Use age group specific slang.;
     FORMAT: Present the result in the following order: (PRODUCT DESCRIPTION), (BENEFITS), (USE CASE);
-    PRODUCT DESCRIPTION: describe the product in 5 sentences;
+    PRODUCT DESCRIPTION: describe the product in 4 sentences;
     BENEFITS: describe in 3 sentences why this product is perfect considering customers age group and study destination;
-    USE CASE: write a story in 5 sentences, of an example weekend activity taking into account study destination {studydestination} and age {agegroup}, write a story in first person, example "I started my Saturday morning with ..."; 
+    USE CASE: write a story in 4 sentences, of an example weekend activity taking into account study destination {studydestination} and age {agegroup}, write a story in first person, example "I started my Saturday morning with ...";
 """
 
 prompt = PromptTemplate(
