@@ -56,7 +56,7 @@ col1, col2 = st.columns(2)
 with col1:
     option_agegroup = st.selectbox(
         'Which age group would you like your content to target?',
-        ('9-15', '16-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-100'))
+        ('16-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-100'))
     
 def get_studydestination():
     input_text = st.text_input(label="Customers main study destination", key=" studydestination_input")
