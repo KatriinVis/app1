@@ -8,16 +8,16 @@ template = """
  You are a marketing copywriter with 20 years of experience. You are analyzing customer's background to write personalized product description that only this customer will receive; 
     PRODUCT input text: {content};
     CUSTOMER age group (y): {agegroup};
-    CUSTOMER main Study destination: {study destination};
+    CUSTOMER main Study destination: {studydestination};
     TASK: Write a product description that is tailored into this customer's Age group and study destination. Use age group specific slang.;
     FORMAT: Present the result in the following order: (PRODUCT DESCRIPTION), (BENEFITS), (USE CASE);
     PRODUCT DESCRIPTION: describe the product in 3 sentences;
     BENEFITS: describe in 3 sentences why this product is perfect considering customers age group and study destination;
-    USE CASE: write a story in 4 sentences, of an example weekend activity taking into account study destination {study destination} and age {agegroup}, write a story in first person, example "I started my Saturday morning with ...";
+    USE CASE: write a story in 4 sentences, of an example weekend activity taking into account study destination {studydestination} and age {agegroup}, write a story in first person, example "I started my Saturday morning with ...";
 """
 
 prompt = PromptTemplate(
-    input_variables=["agegroup", " study destination", "content"],
+    input_variables=["agegroup", " studydestination", "content"],
     template=template,
 )
 
@@ -58,11 +58,11 @@ with col1:
         'Which age group would you like your content to target?',
         ('9-15', '16-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-100'))
     
-def get_study destination():
-    input_text = st.text_input(label="Customers main study destination", key=" study destination_input")
+def get_studydestination():
+    input_text = st.text_input(label="Customers main study destination", key=" studydestination_input")
     return input_text
 
-study destination_input = get_ study destination()
+studydestination_input = get_studydestination()
 
 def get_text():
     input_text = st.text_area(label="Content Input", label_visibility='collapsed', placeholder="Your content...", key="content_input")
@@ -89,7 +89,7 @@ if content_input:
 
     llm = load_LLM(openai_api_key=openai_api_key)
 
-    prompt_with_content = prompt.format(agegroup=option_agegroup, study destination= study destination_input, content=content_input)
+    prompt_with_content = prompt.format(agegroup=option_agegroup, studydestination= studydestination_input, content=content_input)
 
     formatted_content = llm(prompt_with_content)
 
